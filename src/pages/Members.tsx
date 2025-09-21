@@ -302,14 +302,13 @@ const Members = () => {
                           <img
                             src={`/MEMBERS/delegation/${member.filename}`}
                             alt={member.name}
-                            className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-110"
+                            className="w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110"
                             loading="lazy"
                             onError={(e) => {
                               e.currentTarget.src = '/mun-logo.jpg';
                             }}
                             style={{
-                              backgroundColor: 'hsl(var(--muted))',
-                              minHeight: '200px'
+                              backgroundColor: 'hsl(var(--muted))'
                             }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -333,7 +332,7 @@ const Members = () => {
                         <img
                           src={`/MEMBERS/delegation/${member.filename}`}
                           alt={member.name}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover object-center"
                         />
                       </div>
                       <div className="flex-1 space-y-2 min-w-0">
