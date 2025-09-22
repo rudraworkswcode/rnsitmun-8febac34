@@ -97,24 +97,32 @@ const registrationSchema = z
   .refine(
     (data) => {
       if (data.representsRNSIT) {
-        return data.participant1USN && data.participant1USN.length >= 3;
+        if (!data.participant1USN || data.participant1USN.length < 3) {
+          return false;
+        }
+        const usn = data.participant1USN.toLowerCase();
+        return usn.startsWith('1rx') || usn.startsWith('1rn');
       }
       return true;
     },
     {
-      message: "Participant 1 USN is required for RNSIT students",
+      message: "USN must start with 1RX or 1RN",
       path: ["participant1USN"],
     }
   )
   .refine(
     (data) => {
       if (data.representsRNSIT && data.teamSize === "2") {
-        return data.participant2USN && data.participant2USN.length >= 3;
+        if (!data.participant2USN || data.participant2USN.length < 3) {
+          return false;
+        }
+        const usn = data.participant2USN.toLowerCase();
+        return usn.startsWith('1rx') || usn.startsWith('1rn');
       }
       return true;
     },
     {
-      message: "Participant 2 USN is required for RNSIT students in team of 2",
+      message: "USN must start with 1RX or 1RN",
       path: ["participant2USN"],
     }
   );
