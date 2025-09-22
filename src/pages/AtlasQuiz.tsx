@@ -46,12 +46,15 @@ const registrationSchema = z
     participant1Contact: z
       .string()
       .regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit mobile number"),
-    emailId: z
+    participant1Email: z
       .string()
       .email("Please enter a valid email address"),
+    participant1USN: z.string().optional(),
     teamSize: z.enum(["1", "2"], { required_error: "Please select team size" }),
     participant2Name: z.string().optional(),
     participant2Contact: z.string().optional(),
+    participant2Email: z.string().optional(),
+    participant2USN: z.string().optional(),
     streamOfStudy: z.string().min(2, "Stream of study is required"),
     representsRNSIT: z.boolean(),
     institutionName: z.string().optional(),
@@ -67,13 +70,15 @@ const registrationSchema = z
           data.participant2Name &&
           data.participant2Name.length >= 2 &&
           data.participant2Contact &&
-          /^[6-9]\d{9}$/.test(data.participant2Contact)
+          /^[6-9]\d{9}$/.test(data.participant2Contact) &&
+          data.participant2Email &&
+          /\S+@\S+\.\S+/.test(data.participant2Email)
         );
       }
       return true;
     },
     {
-      message: "Participant 2 details are required for team of 2",
+      message: "Participant 2 complete details are required for team of 2",
       path: ["participant2Name"],
     }
   )
@@ -87,6 +92,30 @@ const registrationSchema = z
     {
       message: "Institution name is required when not representing RNSIT",
       path: ["institutionName"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.representsRNSIT) {
+        return data.participant1USN && data.participant1USN.length >= 3;
+      }
+      return true;
+    },
+    {
+      message: "Participant 1 USN is required for RNSIT students",
+      path: ["participant1USN"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.representsRNSIT && data.teamSize === "2") {
+        return data.participant2USN && data.participant2USN.length >= 3;
+      }
+      return true;
+    },
+    {
+      message: "Participant 2 USN is required for RNSIT students in team of 2",
+      path: ["participant2USN"],
     }
   );
 
@@ -112,8 +141,10 @@ type PaymentData = z.infer<typeof paymentSchema>;
 type Step = "registration" | "payment" | "receipt";
 
 interface ReceiptData {
-  participantName: string;
+  participant1Name: string;
+  participant2Name?: string;
   emailId: string;
+  teamName: string;
   receiptId: string;
   proofType: string;
 }
@@ -130,10 +161,13 @@ const AtlasQuiz = () => {
     defaultValues: {
       participant1Name: "",
       participant1Contact: "",
-      emailId: "",
+      participant1Email: "",
+      participant1USN: "",
       teamSize: "1",
       participant2Name: "",
       participant2Contact: "",
+      participant2Email: "",
+      participant2USN: "",
       streamOfStudy: "",
       representsRNSIT: false,
       institutionName: "",
@@ -145,7 +179,7 @@ const AtlasQuiz = () => {
   const paymentForm = useForm<PaymentData>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
-      emailId: registrationData?.emailId || "",
+      emailId: registrationData?.participant1Email || "",
       transactionId: "",
     },
   });
@@ -155,7 +189,7 @@ const AtlasQuiz = () => {
 
   const onRegistrationSubmit = async (data: RegistrationData) => {
     setRegistrationData(data);
-    paymentForm.setValue("emailId", data.emailId);
+    paymentForm.setValue("emailId", data.participant1Email);
     setCurrentStep("payment");
   };
 
@@ -197,12 +231,18 @@ const AtlasQuiz = () => {
       const { error: insertError } = await supabase
         .from("atlas_quiz_registrations")
         .insert({
-          name: registrationData.participant1Name,
-          phone: registrationData.participant1Contact,
-          team_name: registrationData.teamName,
+          participant1_name: registrationData.participant1Name,
+          participant1_contact: registrationData.participant1Contact,
+          participant1_email: data.emailId,
+          participant1_usn: registrationData.participant1USN || null,
+          participant2_name: registrationData.participant2Name || null,
+          participant2_contact: registrationData.participant2Contact || null,
+          participant2_usn: registrationData.participant2USN || null,
+          team_size: parseInt(registrationData.teamSize),
           stream: registrationData.streamOfStudy,
-          institution: registrationData.representsRNSIT ? "RNSIT" : registrationData.institutionName,
-          email: data.emailId,
+          represents_rnsit: registrationData.representsRNSIT,
+          institution_name: registrationData.representsRNSIT ? "RNSIT" : registrationData.institutionName,
+          team_name: registrationData.teamName,
           screenshot_url: screenshotUrl,
           transaction_id: data.transactionId || null,
         });
@@ -213,8 +253,10 @@ const AtlasQuiz = () => {
 
       const receiptId = `ATLAS-${Date.now()}`;
       setReceiptData({
-        participantName: registrationData.participant1Name,
+        participant1Name: registrationData.participant1Name,
+        participant2Name: registrationData.participant2Name,
         emailId: data.emailId,
+        teamName: registrationData.teamName,
         receiptId,
         proofType,
       });
@@ -294,10 +336,10 @@ const AtlasQuiz = () => {
             />
             <FormField
               control={registrationForm.control}
-              name="emailId"
+              name="participant1Email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-white">Email ID</FormLabel>
+                  <FormLabel className="text-white">Participant 1 Email ID</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -367,6 +409,24 @@ const AtlasQuiz = () => {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={registrationForm.control}
+                  name="participant2Email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Participant 2 Email ID</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter participant 2 email address"
+                          className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </>
             )}
             <FormField
@@ -390,22 +450,65 @@ const AtlasQuiz = () => {
               control={registrationForm.control}
               name="representsRNSIT"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-primary/20 p-4">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-primary/30"
+                      className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel className="text-white">
+                    <FormLabel className="text-white font-semibold">
                       Does the team represent RNSIT?
                     </FormLabel>
+                    <p className="text-sm text-white/70">
+                      Check this if you are currently a student at RNSIT
+                    </p>
                   </div>
                 </FormItem>
               )}
             />
+            {representsRNSIT && (
+              <>
+                <FormField
+                  control={registrationForm.control}
+                  name="participant1USN"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Participant 1 USN</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter USN (e.g., 1RN20CS001)"
+                          className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {teamSize === "2" && (
+                  <FormField
+                    control={registrationForm.control}
+                    name="participant2USN"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Participant 2 USN</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter USN (e.g., 1RN20CS002)"
+                            className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </>
+            )}
             {!representsRNSIT && (
               <FormField
                 control={registrationForm.control}
@@ -446,18 +549,22 @@ const AtlasQuiz = () => {
               control={registrationForm.control}
               name="agreedTerms"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-primary/20 p-4 bg-primary/5">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-primary/30"
+                      className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel className="text-white">
-                      I agree to the terms and conditions
+                    <FormLabel className="text-white font-semibold">
+                      I agree to the terms and conditions *
                     </FormLabel>
+                    <p className="text-sm text-white/70">
+                      Required to proceed with registration
+                    </p>
+                    <FormMessage />
                   </div>
                 </FormItem>
               )}
@@ -600,7 +707,11 @@ const AtlasQuiz = () => {
           
           <div className="border-b border-primary/20 pb-4">
             <h3 className="text-lg font-semibold mb-2">Participant Details</h3>
-            <p><span className="text-white/70">Participant Name:</span> {receiptData?.participantName}</p>
+            <p><span className="text-white/70">Participant 1:</span> {receiptData?.participant1Name}</p>
+            {receiptData?.participant2Name && (
+              <p><span className="text-white/70">Participant 2:</span> {receiptData?.participant2Name}</p>
+            )}
+            <p><span className="text-white/70">Team Name:</span> {receiptData?.teamName}</p>
             <p><span className="text-white/70">Email ID:</span> {receiptData?.emailId}</p>
           </div>
           

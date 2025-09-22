@@ -16,91 +16,61 @@ export type Database = {
     Tables: {
       atlas_quiz_registrations: {
         Row: {
-          created_at: string | null
-          email: string
-          id: number
-          institution: string | null
-          name: string
-          phone: string
+          created_at: string
+          id: string
+          institution_name: string | null
+          participant1_contact: string
+          participant1_email: string
+          participant1_name: string
+          participant1_usn: string | null
+          participant2_contact: string | null
+          participant2_name: string | null
+          participant2_usn: string | null
+          represents_rnsit: boolean
           screenshot_url: string | null
           stream: string
           team_name: string
+          team_size: number
           transaction_id: string | null
+          updated_at: string
         }
         Insert: {
-          created_at?: string | null
-          email: string
-          id?: number
-          institution?: string | null
-          name: string
-          phone: string
+          created_at?: string
+          id?: string
+          institution_name?: string | null
+          participant1_contact: string
+          participant1_email: string
+          participant1_name: string
+          participant1_usn?: string | null
+          participant2_contact?: string | null
+          participant2_name?: string | null
+          participant2_usn?: string | null
+          represents_rnsit?: boolean
           screenshot_url?: string | null
           stream: string
           team_name: string
+          team_size: number
           transaction_id?: string | null
+          updated_at?: string
         }
         Update: {
-          created_at?: string | null
-          email?: string
-          id?: number
-          institution?: string | null
-          name?: string
-          phone?: string
+          created_at?: string
+          id?: string
+          institution_name?: string | null
+          participant1_contact?: string
+          participant1_email?: string
+          participant1_name?: string
+          participant1_usn?: string | null
+          participant2_contact?: string | null
+          participant2_name?: string | null
+          participant2_usn?: string | null
+          represents_rnsit?: boolean
           screenshot_url?: string | null
           stream?: string
           team_name?: string
+          team_size?: number
           transaction_id?: string | null
-        }
-        Relationships: []
-      }
-      atlas_registrations: {
-        Row: {
-          agreed_terms: boolean
-          created_at: string | null
-          id: number
-          institution_name: string | null
-          is_rnsit: boolean
-          participant1_contact: string
-          participant1_name: string
-          participant2_contact: string | null
-          participant2_name: string | null
-          payment_amount: number
-          payment_proof_url: string | null
-          stream_of_study: string
-          team_name: string
-          team_size: number
-        }
-        Insert: {
-          agreed_terms?: boolean
-          created_at?: string | null
-          id?: number
-          institution_name?: string | null
-          is_rnsit?: boolean
-          participant1_contact: string
-          participant1_name: string
-          participant2_contact?: string | null
-          participant2_name?: string | null
-          payment_amount?: number
-          payment_proof_url?: string | null
-          stream_of_study: string
-          team_name: string
-          team_size?: number
-        }
-        Update: {
-          agreed_terms?: boolean
-          created_at?: string | null
-          id?: number
-          institution_name?: string | null
-          is_rnsit?: boolean
-          participant1_contact?: string
-          participant1_name?: string
-          participant2_contact?: string | null
-          participant2_name?: string | null
-          payment_amount?: number
-          payment_proof_url?: string | null
-          stream_of_study?: string
-          team_name?: string
-          team_size?: number
+          updated_at?: string
         }
         Relationships: []
       }
