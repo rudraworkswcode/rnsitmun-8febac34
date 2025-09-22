@@ -63,25 +63,33 @@ const registrationSchema = z
       .boolean()
       .refine((val) => val === true, "You must agree to terms and conditions"),
   })
-  .refine(
-    (data) => {
-      if (data.teamSize === "2") {
-        return (
-          data.participant2Name &&
-          data.participant2Name.length >= 2 &&
-          data.participant2Contact &&
-          /^[6-9]\d{9}$/.test(data.participant2Contact) &&
-          data.participant2Email &&
-          /\S+@\S+\.\S+/.test(data.participant2Email)
-        );
+  .superRefine((data, ctx) => {
+    if (data.teamSize === "2") {
+      if (!data.participant2Name || data.participant2Name.length < 2) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Participant 2 name must be at least 2 characters",
+          path: ["participant2Name"],
+        });
       }
-      return true;
-    },
-    {
-      message: "Participant 2 complete details are required for team of 2",
-      path: ["participant2Name"],
+
+      if (!data.participant2Contact || !/^[6-9]\d{9}$/.test(data.participant2Contact)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Please enter a valid 10-digit mobile number",
+          path: ["participant2Contact"],
+        });
+      }
+
+      if (!data.participant2Email || !/\S+@\S+\.\S+/.test(data.participant2Email)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Please enter a valid email address",
+          path: ["participant2Email"],
+        });
+      }
     }
-  )
+  })
   .refine(
     (data) => {
       if (!data.representsRNSIT) {
@@ -458,12 +466,12 @@ const AtlasQuiz = () => {
               control={registrationForm.control}
               name="representsRNSIT"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-primary/20 p-4">
+                <FormItem className="flex flex-row items-start space-x-4 space-y-0 rounded-xl border border-primary/30 p-4 bg-black/40 hover:border-primary/60 focus-within:ring-2 focus-within:ring-primary/50 transition-colors">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                      className="w-6 h-6 rounded-md border-2 border-primary/50 bg-black/60 text-white data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 shadow-sm"
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
@@ -557,12 +565,12 @@ const AtlasQuiz = () => {
               control={registrationForm.control}
               name="agreedTerms"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-primary/20 p-4 bg-primary/5">
+                <FormItem className="flex flex-row items-start space-x-4 space-y-0 rounded-xl border border-primary/40 p-4 bg-primary/10 hover:border-primary/60 focus-within:ring-2 focus-within:ring-primary/50 transition-colors">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                      className="w-6 h-6 rounded-md border-2 border-primary/60 bg-black/60 text-white data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 shadow-sm"
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">

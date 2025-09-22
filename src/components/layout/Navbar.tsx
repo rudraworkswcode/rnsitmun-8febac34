@@ -55,7 +55,7 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col">
               <span className="font-inter font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors max-w-none">
-                RNSIT MUNsoc
+                RNSIT MUNSoc
               </span>
               <span className="font-inter text-xs text-muted-foreground hidden sm:block tracking-wide max-w-none">
                 Model United Nations

@@ -53,7 +53,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="font-inter text-2xl md:text-3xl font-bold text-foreground">
-                  RNSIT MUNsoc
+                  RNSIT MUNSoc
                 </h3>
                 <p className="text-foreground/70 text-sm font-roboto-mono tracking-wide">
                   Model United Nations
@@ -162,7 +162,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="border-t border-primary/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-foreground/70 text-sm font-inter text-center md:text-left">
-            &copy; {currentYear} RNSIT MUN. All Rights Reserved.
+            &copy; {currentYear} RNSIT MUNSoc. All Rights Reserved.
           </p>
           <div className="flex space-x-8">
             <Link

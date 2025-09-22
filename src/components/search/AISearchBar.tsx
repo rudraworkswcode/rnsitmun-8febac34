@@ -4,7 +4,6 @@ import {
   Loader2,
   ThumbsUp,
   ThumbsDown,
-  ExternalLink,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
@@ -88,7 +87,7 @@ const AISearchBar = () => {
 
       const updatedResult: SearchResult = {
         answer: data.answer || "No answer found.",
-        sources: safeSources,
+        sources: [],
         confidence,
       };
 
@@ -286,48 +285,7 @@ const AISearchBar = () => {
                 </div>
               </div>
 
-              {/* Sources */}
-              {result.sources && result.sources.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-4 font-inter">
-                    Sources
-                  </h4>
-                  <div className="space-y-3">
-                    {result.sources.map((source, index) => (
-                      <div
-                        key={index}
-                        className="bg-white/5 border border-white/10 rounded-xl p-3 sm:p-4 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                      >
-                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                          <div className="flex-1 min-w-0">
-                            <h5 className="font-semibold text-white font-inter mb-2 text-sm sm:text-base line-clamp-2">
-                              {source.title}
-                            </h5>
-                            <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-inter line-clamp-3">
-                              {source.snippet}
-                            </p>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            asChild
-                            className="self-start sm:ml-3 text-primary hover:text-white hover:bg-primary/20 transition-all duration-300 rounded-lg min-h-8 min-w-8 flex-shrink-0"
-                          >
-                            <a
-                              href={source.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label="Open source link"
-                            >
-                              <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                            </a>
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Sources removed as requested */}
 
               {/* Feedback */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/10">
