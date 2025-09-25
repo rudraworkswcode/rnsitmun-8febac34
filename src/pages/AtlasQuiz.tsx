@@ -621,6 +621,22 @@ const AtlasQuiz = () => {
               />
             </div>
           </div>
+          
+          {/* UPI Payment Link */}
+          <div className="text-center space-y-3">
+            <p className="text-white/70 text-sm">or</p>
+            <Button
+              type="button"
+              onClick={() => window.open("upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&aid=uGICAgMCg-IzqQw", "_self")}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
+            >
+              Pay ₹60 via UPI Apps
+            </Button>
+            <p className="text-xs text-white/50">
+              Click to open in GPay, PhonePe, Paytm, or any UPI app
+            </p>
+          </div>
+          
           <p className="text-center text-white/70">
             Provide payment proof: Upload screenshot OR enter transaction ID
           </p>
