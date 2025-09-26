@@ -623,19 +623,42 @@ const AtlasQuiz = () => {
           </div>
           
           {/* UPI Payment Link */}
-          <div className="text-center space-y-3">
-            <p className="text-white/70 text-sm">or</p>
-            <Button
-              type="button"
-              onClick={() => {window.location.href = "upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&tn=Atlas+Quiz+Registration";}}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
-            >
-              Pay ₹60 via UPI Apps
-            </Button>
-            <p className="text-xs text-white/50">
-              Click to open in GPay, PhonePe, Paytm, or any UPI app
-            </p>
-          </div>
+<div className="text-center space-y-3">
+  <p className="text-white/70 text-sm">or</p>
+
+  <Button
+    type="button"
+    onClick={() => {
+      window.location.href =
+        "upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&tn=Atlas+Quiz+Registration";
+    }}
+    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
+  >
+    Pay ₹60 via UPI Apps
+  </Button>
+
+  <div className="flex justify-center items-center gap-4 mt-2">
+    <img
+      src="/logos/gpay.png"
+      alt="Google Pay"
+      className="h-6 w-auto animate-bounce"
+    />
+    <img
+      src="/logos/phonepe.png"
+      alt="PhonePe"
+      className="h-6 w-auto animate-bounce delay-150"
+    />
+    <img
+      src="/logos/paytm.png"
+      alt="Paytm"
+      className="h-6 w-auto animate-bounce delay-300"
+    />
+  </div>
+
+  <p className="text-xs text-white/50">
+    Click to open in GPay, PhonePe, Paytm, or any UPI app
+  </p>
+</div>
           
           <p className="text-center text-white/70">
             Provide payment proof: Upload screenshot OR enter transaction ID
