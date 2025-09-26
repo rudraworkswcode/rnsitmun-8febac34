@@ -597,7 +597,27 @@ const AtlasQuiz = () => {
     </Card>
   );
 
-  const renderPaymentForm = () => (
+const renderPaymentForm = () => {
+  // detect mobile once
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  const handleUpiClick = () => {
+    if (!isMobile) {
+      alert("This payment option works only on mobile devices. Please scan the QR code instead.");
+      return;
+    }
+    window.location.href =
+      "upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&tn=Atlas+Event+Registration";
+  };
+
+  const logos = [
+    { src: "/gpay.png", alt: "Google Pay" },
+    { src: "/phonepe.png", alt: "PhonePe" },
+    { src: "/paytm.png", alt: "Paytm" },
+    { src: "/bhim.png", alt: "BHIM" },
+  ];
+
+  return (
     <Card className="max-w-2xl mx-auto bg-black/90 border-primary/30 backdrop-blur-lg shadow-2xl">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold text-white flex items-center justify-center gap-2">
@@ -607,6 +627,7 @@ const AtlasQuiz = () => {
       </CardHeader>
       <CardContent className="p-6">
         <div className="space-y-6">
+          {/* QR */}
           <div className="flex justify-center">
             <div className="bg-white p-4 rounded-lg">
               <img
@@ -621,28 +642,52 @@ const AtlasQuiz = () => {
               />
             </div>
           </div>
-          
+
           {/* UPI Payment Link */}
-          <div className="text-center space-y-3">
+          <div className="text-center space-y-4">
             <p className="text-white/70 text-sm">or</p>
+
+            {/* Animated Logos */}
+            <div className="flex justify-center gap-6 flex-wrap">
+              {logos.map((logo, index) => (
+                <motion.img
+                  key={index}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="w-12 h-12 md:w-16 md:h-16 object-contain rounded-full bg-white p-2"
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    delay: index * 0.2,
+                  }}
+                  onError={(e) => (e.currentTarget.src = "/placeholder.svg")}
+                />
+              ))}
+            </div>
+
             <Button
               type="button"
-              onClick={() => {window.location.href = "upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&tn=Atlas+Event+Registration";}}
+              onClick={handleUpiClick}
               className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
             >
               Pay ₹60 via UPI Apps
             </Button>
             <p className="text-xs text-white/50">
-              Click to open in GPay, PhonePe, Paytm, or any UPI app
+              Works only on mobile. Opens directly in GPay, PhonePe, Paytm, or BHIM
             </p>
           </div>
-          
+
+          {/* Payment Proof */}
           <p className="text-center text-white/70">
             Provide payment proof: Upload screenshot OR enter transaction ID
           </p>
-          
+
           <Form {...paymentForm}>
-            <form onSubmit={paymentForm.handleSubmit(onPaymentSubmit)} className="space-y-6">
+            <form
+              onSubmit={paymentForm.handleSubmit(onPaymentSubmit)}
+              className="space-y-6"
+            >
               <FormField
                 control={paymentForm.control}
                 name="emailId"
@@ -661,16 +706,20 @@ const AtlasQuiz = () => {
                   </FormItem>
                 )}
               />
-              
+
               <div className="bg-black/30 border border-primary/20 rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-4">Payment Proof (Choose one option)</h3>
+                <h3 className="text-white font-semibold mb-4">
+                  Payment Proof (Choose one option)
+                </h3>
                 <div className="space-y-4">
                   <FormField
                     control={paymentForm.control}
                     name="paymentScreenshot"
                     render={({ field: { onChange, value, ...field } }) => (
                       <FormItem>
-                        <FormLabel className="text-white">Option 1: Upload Payment Screenshot</FormLabel>
+                        <FormLabel className="text-white">
+                          Option 1: Upload Payment Screenshot
+                        </FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Input
@@ -686,15 +735,17 @@ const AtlasQuiz = () => {
                       </FormItem>
                     )}
                   />
-                  
+
                   <div className="text-center text-white/50">OR</div>
-                  
+
                   <FormField
                     control={paymentForm.control}
                     name="transactionId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-white">Option 2: Enter Transaction ID</FormLabel>
+                        <FormLabel className="text-white">
+                          Option 2: Enter Transaction ID
+                        </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Enter UPI/Payment Transaction ID"
@@ -720,147 +771,6 @@ const AtlasQuiz = () => {
         </div>
       </CardContent>
     </Card>
-  );
-
-  const renderReceipt = () => (
-    <Card className="max-w-2xl mx-auto bg-black/90 border-primary/30 backdrop-blur-lg shadow-2xl">
-      <CardHeader className="text-center">
-        <div className="flex justify-center mb-4">
-          <CheckCircle className="w-16 h-16 text-green-500" />
-        </div>
-        <CardTitle className="text-2xl font-bold text-white">Payment Receipt</CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="space-y-4 text-white">
-          <div className="border-b border-primary/20 pb-4">
-            <h3 className="text-lg font-semibold mb-2">Event Details</h3>
-            <p><span className="text-white/70">Event Name:</span> Atlas Quiz</p>
-          </div>
-          
-          <div className="border-b border-primary/20 pb-4">
-            <h3 className="text-lg font-semibold mb-2">Participant Details</h3>
-            <p><span className="text-white/70">Participant 1:</span> {receiptData?.participant1Name}</p>
-            {receiptData?.participant2Name && (
-              <p><span className="text-white/70">Participant 2:</span> {receiptData?.participant2Name}</p>
-            )}
-            <p><span className="text-white/70">Team Name:</span> {receiptData?.teamName}</p>
-            <p><span className="text-white/70">Email ID:</span> {receiptData?.emailId}</p>
-          </div>
-          
-          <div className="border-b border-primary/20 pb-4">
-            <h3 className="text-lg font-semibold mb-2">Payment Status</h3>
-            <p className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="text-green-500 font-semibold">✅ Successful</span>
-            </p>
-            <p><span className="text-white/70">Proof:</span> {receiptData?.proofType}</p>
-          </div>
-          
-          <div className="border-b border-primary/20 pb-4">
-            <h3 className="text-lg font-semibold mb-2">Receipt Details</h3>
-            <p><span className="text-white/70">Receipt ID:</span> {receiptData?.receiptId}</p>
-            <p><span className="text-white/70">Amount:</span> ₹60</p>
-            <p><span className="text-white/70">Date:</span> {new Date().toLocaleDateString()}</p>
-          </div>
-        </div>
-        
-        <div className="flex gap-4 mt-6">
-          <Button
-            onClick={handlePrintReceipt}
-            className="flex-1 bg-primary hover:bg-primary/90 text-white"
-          >
-            <Printer className="mr-2 w-4 h-4" />
-            Print / Download Receipt
-          </Button>
-          <Button
-            onClick={handleBackToForm}
-            variant="outline"
-            className="flex-1 border-primary/30 text-white hover:bg-primary/10"
-          >
-            <ArrowLeft className="mr-2 w-4 h-4" />
-            Back
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  return (
-    <section className="relative min-h-screen bg-gradient-to-br from-background via-background to-black/80 py-16 sm:py-24">
-      <div className="absolute inset-0 bg-[url('/atlas-bg.jpg')] bg-cover bg-center opacity-10" />
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="font-inter text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
-            Atlas Quiz 2025
-          </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
-            Gear up for the biggest intercollegiate quiz at{" "}
-            <strong>RNSIT</strong> – test your knowledge, compete with
-            the brightest, and win exciting rewards!
-          </p>
-        </div>
-        <Layout>
-          <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
-                  <Trophy className="w-5 h-5 text-primary" />
-                  <span className="text-primary font-medium">Atlas Intercollege Quiz</span>
-                </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 font-inter tracking-tight">
-                  Register for <span className="text-gradient-lusion">Atlas Quiz</span>
-                </h1>
-                <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-                  Join us for an exciting intercollege quiz competition. Test your knowledge, compete with brilliant minds, and win amazing prizes!
-                </p>
-              </div>
-
-              {currentStep === "registration" && (
-                <>
-                  {/* Event Details */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
-                    <Card className="bg-black/40 border-primary/20 backdrop-blur-sm">
-                      <CardContent className="p-6 text-center">
-                        <Calendar className="w-8 h-8 text-primary mx-auto mb-3" />
-                        <h3 className="font-semibold text-white mb-2">Date</h3>
-                        <p className="text-white/70">9 October 2025</p>
-                        <p className="text-white/70">9 October 2025</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-black/40 border-primary/20 backdrop-blur-sm">
-                      <CardContent className="p-6 text-center">
-                        <MapPin className="w-8 h-8 text-primary mx-auto mb-3" />
-                        <h3 className="font-semibold text-white mb-2">Venue</h3>
-                        <p className="text-white/70">RNSIT Campus</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-black/40 border-primary/20 backdrop-blur-sm">
-                      <CardContent className="p-6 text-center">
-                        <Users className="w-8 h-8 text-primary mx-auto mb-3" />
-                        <h3 className="font-semibold text-white mb-2">Entry Fee</h3>
-                        <p className="text-white/70">₹60 per team</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-black/40 border-primary/20 backdrop-blur-sm">
-                      <CardContent className="p-6 text-center">
-                        <Trophy className="w-8 h-8 text-primary mx-auto mb-3" />
-                        <h3 className="font-semibold text-white mb-2">Prize Pool</h3>
-                        <p className="text-white/70">₹6,000</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  {renderRegistrationForm()}
-                </>
-              )}
-
-              {currentStep === "payment" && renderPaymentForm()}
-              {currentStep === "receipt" && renderReceipt()}
-            </div>
-          </div>
-        </Layout>
-      </div>
-    </section>
   );
 };
 
