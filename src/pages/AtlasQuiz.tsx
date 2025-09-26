@@ -597,187 +597,176 @@ const AtlasQuiz = () => {
     </Card>
   );
 
-  const renderPaymentForm = () => (
-    <Card className="max-w-2xl mx-auto bg-black/90 border-primary/30 backdrop-blur-lg shadow-2xl">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold text-white flex items-center justify-center gap-2">
-          <QrCode className="w-6 h-6" />
-          Go to Payment – Scan the QR below to pay ₹60
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="space-y-6">
-          <div className="flex justify-center">
-            <div className="bg-white p-4 rounded-lg">
-              <img
-                src="/atlas-payment-qr.png"
-                alt="Payment QR Code - ₹60"
-                className="w-48 h-48 object-contain"
-                onError={(e) => {
-                  e.currentTarget.src = "/placeholder.svg";
-                  e.currentTarget.alt =
-                    "Payment QR Code (Please add atlas-payment-qr.png to public folder)";
-                }}
-              />
-            </div>
+const renderPaymentForm = () => (
+  <Card className="max-w-2xl mx-auto bg-black/90 border-primary/30 backdrop-blur-lg shadow-2xl">
+    <CardHeader className="text-center">
+      <CardTitle className="text-2xl font-bold text-white flex items-center justify-center gap-2">
+        <QrCode className="w-6 h-6" />
+        Go to Payment – Scan the QR below to pay ₹60
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="p-6">
+      <div className="space-y-6">
+        {/* QR Code Fallback */}
+        <div className="flex justify-center">
+          <div className="bg-white p-4 rounded-lg">
+            <img
+              src="/atlas-payment-qr.png"
+              alt="Payment QR Code - ₹60"
+              className="w-48 h-48 object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/placeholder.svg";
+                e.currentTarget.alt =
+                  "Payment QR Code (Please add atlas-payment-qr.png to public folder)";
+              }}
+            />
           </div>
-          
-          {/* UPI Payment Link */}
-<div className="text-center space-y-4">
-  <p className="text-white/70 text-sm">or</p>
+        </div>
 
-  {/* UPI Deep Link Button */}
-  <Button
-    type="button"
-    onClick={() => {
-      window.location.href =
-        "upi://pay?pa=nikhilnayak2005-1@okicici&pn=Nikhil&am=60.00&cu=INR&tn=Atlas+Quiz+Registration";
-    }}
-    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
-  >
-    Pay ₹60 via UPI Apps
-  </Button>
+        {/* Razorpay Payment Link */}
+        <div className="text-center space-y-3">
+          <p className="text-white/70 text-sm">or</p>
+          <a
+            href="https://rzp.io/l/AtlasQuiz60" // Replace with your actual Razorpay link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
+          >
+            Pay ₹60 via Razorpay (UPI, Cards, Wallets)
+          </a>
 
-  {/* Animated Logos */}
-  <div className="flex justify-center items-center gap-4 mt-2">
-    <img
-      src="/logos/gpay.png"
-      alt="Google Pay"
-      className="h-6 w-auto animate-bounce"
-    />
-    <img
-      src="/logos/phonepe.png"
-      alt="PhonePe"
-      className="h-6 w-auto animate-bounce delay-150"
-    />
-    <img
-      src="/logos/paytm.png"
-      alt="Paytm"
-      className="h-6 w-auto animate-bounce delay-300"
-    />
-  </div>
+          {/* Animated UPI Logos */}
+          <div className="flex justify-center items-center gap-4 mt-2">
+            <img
+              src="/logos/gpay.png"
+              alt="Google Pay"
+              className="h-6 w-auto animate-bounce"
+            />
+            <img
+              src="/logos/phonepe.png"
+              alt="PhonePe"
+              className="h-6 w-auto animate-bounce delay-150"
+            />
+            <img
+              src="/logos/paytm.png"
+              alt="Paytm"
+              className="h-6 w-auto animate-bounce delay-300"
+            />
+          </div>
 
-  <p className="text-xs text-white/50">
-    Click to open in GPay, PhonePe, Paytm, or any UPI app
-  </p>
-
-  {/* Razorpay Fallback Link */}
-  <a
-    href="https://razorpay.com/pay/yourlink" // Replace with your actual Razorpay link
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block text-sm text-blue-400 underline mt-2"
-  >
-    Having trouble? Try this verified payment link
-  </a>
-
-  {/* QR Code + Copy UPI ID Fallback */}
-  <div className="mt-4 space-y-2">
-    <img
-      src="/qr/atlas-quiz.png" // Replace with your actual QR image
-      alt="Scan to Pay"
-      className="mx-auto h-32 w-32 rounded-md shadow-md"
-    />
-    <p className="text-xs text-white/50">Scan QR if UPI apps show a warning</p>
-    <button
-      onClick={() => navigator.clipboard.writeText("nikhilnayak2005-1@okicici")}
-      className="text-xs text-green-400 underline"
-    >
-      Copy UPI ID: nikhilnayak2005-1@okicici
-    </button>
-  </div>
-</div>
-
-  <p className="text-xs text-white/50">
-    Click to open in GPay, PhonePe, Paytm, or any UPI app
-  </p>
-</div>
-          
-          <p className="text-center text-white/70">
-            Provide payment proof: Upload screenshot OR enter transaction ID
+          <p className="text-xs text-white/50">
+            Works with GPay, PhonePe, Paytm, and all major UPI apps
           </p>
-          
-          <Form {...paymentForm}>
-            <form onSubmit={paymentForm.handleSubmit(onPaymentSubmit)} className="space-y-6">
-              <FormField
-                control={paymentForm.control}
-                name="emailId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Email ID</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter email address"
-                        className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              <div className="bg-black/30 border border-primary/20 rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-4">Payment Proof (Choose one option)</h3>
-                <div className="space-y-4">
-                  <FormField
-                    control={paymentForm.control}
-                    name="paymentScreenshot"
-                    render={({ field: { onChange, value, ...field } }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Option 1: Upload Payment Screenshot</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              type="file"
-                              accept="image/*"
-                              className="bg-black/50 border-primary/30 text-white file:bg-primary file:text-white file:border-0 file:rounded-md file:px-3 file:py-1"
-                              onChange={(e) => onChange(e.target.files)}
-                              {...field}
-                            />
-                            <Upload className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none" />
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="text-center text-white/50">OR</div>
-                  
-                  <FormField
-                    control={paymentForm.control}
-                    name="transactionId"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Option 2: Enter Transaction ID</FormLabel>
-                        <FormControl>
+        </div>
+
+        {/* Copy UPI ID Fallback */}
+        <div className="text-center space-y-2">
+          <p className="text-white/70 text-sm">or use UPI ID manually</p>
+          <button
+            onClick={() =>
+              navigator.clipboard.writeText("nikhilnayak2005-1@okicici")
+            }
+            className="text-sm text-green-400 underline"
+          >
+            Copy UPI ID: nikhilnayak2005-1@okicici
+          </button>
+        </div>
+
+        {/* Payment Proof Section */}
+        <p className="text-center text-white/70">
+          Provide payment proof: Upload screenshot OR enter transaction ID
+        </p>
+
+        <Form {...paymentForm}>
+          <form
+            onSubmit={paymentForm.handleSubmit(onPaymentSubmit)}
+            className="space-y-6"
+          >
+            <FormField
+              control={paymentForm.control}
+              name="emailId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Email ID</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Enter email address"
+                      className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="bg-black/30 border border-primary/20 rounded-lg p-4">
+              <h3 className="text-white font-semibold mb-4">
+                Payment Proof (Choose one option)
+              </h3>
+              <div className="space-y-4">
+                <FormField
+                  control={paymentForm.control}
+                  name="paymentScreenshot"
+                  render={({ field: { onChange, value, ...field } }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">
+                        Option 1: Upload Payment Screenshot
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative">
                           <Input
-                            placeholder="Enter UPI/Payment Transaction ID"
-                            className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                            type="file"
+                            accept="image/*"
+                            className="bg-black/50 border-primary/30 text-white file:bg-primary file:text-white file:border-0 file:rounded-md file:px-3 file:py-1"
+                            onChange={(e) => onChange(e.target.files)}
                             {...field}
                           />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormMessage />
-              </div>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(26,47,251,0.4)]"
-              >
-                {isSubmitting ? "Submitting..." : "Submit"}
-              </Button>
-            </form>
-          </Form>
-        </div>
-      </CardContent>
-    </Card>
-  );
+                          <Upload className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none" />
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
+                <div className="text-center text-white/50">OR</div>
+
+                <FormField
+                  control={paymentForm.control}
+                  name="transactionId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">
+                        Option 2: Enter Transaction ID
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter UPI/Payment Transaction ID"
+                          className="bg-black/50 border-primary/30 text-white placeholder:text-white/50"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormMessage />
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(26,47,251,0.4)]"
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </CardContent>
+  </Card>
+);
   const renderReceipt = () => (
     <Card className="max-w-2xl mx-auto bg-black/90 border-primary/30 backdrop-blur-lg shadow-2xl">
       <CardHeader className="text-center">
