@@ -942,22 +942,23 @@ const renderPaymentForm = () => (
                    {/* Expandable Event Details Section */}
                    <div className="max-w-5xl mx-auto mb-12">
                      <Collapsible open={isEventDetailsOpen} onOpenChange={setIsEventDetailsOpen}>
-                       <CollapsibleTrigger asChild>
-                         <Button 
-                           variant="outline" 
-                           className="w-full bg-black/40 border-primary/20 backdrop-blur-sm text-white hover:bg-primary/20 transition-all duration-300"
-                         >
-                           <div className="flex items-center justify-center gap-2 w-full">
-                             <FileText className="w-5 h-5" />
-                             <span className="font-medium">Event Details</span>
-                             {isEventDetailsOpen ? (
-                               <ChevronUp className="w-5 h-5 ml-auto" />
-                             ) : (
-                               <ChevronDown className="w-5 h-5 ml-auto" />
-                             )}
-                           </div>
-                         </Button>
-                       </CollapsibleTrigger>
+                      <CollapsibleTrigger asChild>
+                        <Button
+                          variant="default"
+                          className="w-full group rounded-xl bg-primary/20 text-white border border-primary/50 shadow-sm hover:bg-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 transition-all duration-300 relative overflow-hidden pl-5 sm:pl-6"
+                        >
+                          <span aria-hidden className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary to-accent opacity-80" />
+                          <div className="flex items-center justify-center gap-2 w-full">
+                            <FileText className="w-5 h-5 text-white" />
+                            <span className="font-semibold text-base sm:text-lg">Event Details</span>
+                            {isEventDetailsOpen ? (
+                              <ChevronUp className="w-5 h-5 ml-auto text-white" />
+                            ) : (
+                              <ChevronDown className="w-5 h-5 ml-auto text-white" />
+                            )}
+                          </div>
+                        </Button>
+                      </CollapsibleTrigger>
                        <CollapsibleContent className="animate-accordion-down">
                          <Card className="mt-4 bg-black/40 border-primary/20 backdrop-blur-sm">
                            <CardContent className="p-8">
