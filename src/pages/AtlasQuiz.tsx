@@ -796,7 +796,7 @@ const renderPaymentForm = () => (
                 <span className="font-medium">Date:</span>
                 <span>9th October, 2025</span>
                 <span className="font-medium">Venue:</span>
-                <span>RNSIT Campus</span>
+                <span>RNSIT Mini AUDITORIUM</span>
               </div>
             </div>
             
@@ -920,7 +920,7 @@ const renderPaymentForm = () => (
                       <CardContent className="p-6 text-center">
                         <MapPin className="w-8 h-8 text-primary mx-auto mb-3" />
                         <h3 className="font-semibold text-white mb-2">Venue</h3>
-                        <p className="text-white/70">RNSIT Campus</p>
+                        <p className="text-white/70">RNSIT Mini AUDITORIUM</p>
                       </CardContent>
                     </Card>
                     <Card className="bg-black/40 border-primary/20 backdrop-blur-sm">
