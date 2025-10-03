@@ -112,7 +112,7 @@ const coreTeam = [
   {
     name: "V Koushik",
     title: "Vice President",
-    image: "/placeholder.svg",
+    image: "/MEMBERS/CC Members/Koushik.jpg",
   },
   {
     name: "Harsh Ringsia",
@@ -122,7 +122,7 @@ const coreTeam = [
   {
     name: "Aditi Maktedar",
     title: "Core Team Member",
-    image: "/MEMBERS/CC Members/Aditi Maktedar.pdf",
+    image: "/MEMBERS/CC Members/Aditi Maktedar.jpg",
   },
   {
     name: "Vamshi Ganesh",
@@ -147,7 +147,7 @@ const coreTeam = [
   {
     name: "Vivek D Vagale",
     title: "Core Team Member",
-    image: "/MEMBERS/CC Members/Vivek D Vagale.HEIC",
+    image: "/MEMBERS/CC Members/Vivek D Vagale.jpg",
   },
   {
     name: "Aditi Revankar",
@@ -162,17 +162,17 @@ const coreTeam = [
   {
     name: "Varshini",
     title: "Core Team Member",
-    image: "/placeholder.svg",
-  },
-  {
-    name: "Yamini Mouli C",
-    title: "Core Team Member",
     image: "/MEMBERS/CC Members/Varshini.jpg",
   },
   {
     name: "Nihal N",
     title: "Core Team Member",
     image: "/MEMBERS/CC Members/Nihal N(Aiml).jpg",
+  },
+  {
+    name: "Yamini Mouli C",
+    title: "Core Team Member",
+    image: "/placeholder.svg",
   }
 ];
 
