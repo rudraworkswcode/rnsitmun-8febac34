@@ -147,7 +147,7 @@ const coreTeam = [
   {
     name: "Vivek D Vagale",
     title: "Core Team Member",
-    image: "/MEMBERS/CC Members/Vivek_D_Vagale.jpg",
+    image: "/MEMBERS/CC Members/Vivek.jpg",
   },
   {
     name: "Aditi Revankar",
