@@ -127,7 +127,7 @@ const coreTeam = [
   {
     name: "Vamshi Ganesh",
     title: "Core Team Member",
-    image: "/MEMBERS/CC Members/Vamshi.jpg",
+    image: "/MEMBERS/CC Members/vamshi formal .png",
   },
   {
     name: "Tasmiya Afreen",
