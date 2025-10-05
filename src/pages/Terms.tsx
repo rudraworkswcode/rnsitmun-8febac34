@@ -62,6 +62,15 @@ const Terms = () => {
           </section>
 
           <section className="mb-10">
+            <h2>Registration and Payment Terms</h2>
+            <ul>
+              <li>Once registration and payment are completed, the amount is non-refundable under normal circumstances.</li>
+              <li>Refunds will only be considered if the event is officially cancelled by the management or if a verified issue occurs during the registration process.</li>
+              <li>Participants are responsible for ensuring accurate information during registration; any discrepancies must be reported immediately.</li>
+            </ul>
+          </section>
+
+          <section className="mb-10">
             <h2>Content</h2>
             <p>
               Content on this site is owned by RNSIT MUN or its licensors and is protected by
