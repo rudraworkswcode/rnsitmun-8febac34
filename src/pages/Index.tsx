@@ -1,4 +1,4 @@
-import { Trophy, Calendar, Users } from "lucide-react";
+import { Sparkles, Calendar, Users } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
@@ -41,7 +41,7 @@ const Index = () => {
                 {/* Content Side */}
                 <div className="p-8 sm:p-12">
                   <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 rounded-full px-4 py-2 mb-6">
-                    <Trophy className="w-5 h-5 text-primary animate-pulse" />
+                    <Sparkles className="w-5 h-5 text-primary animate-pulse" />
                     <span className="text-primary font-semibold text-sm">REGISTRATION OPEN</span>
                   </div>
                   

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Globe, ArrowRight, Sparkles } from "lucide-react";
+import { BookOpen, ArrowRight } from "lucide-react";
 import ImageSlideshow from "@/components/slideshow/ImageSlideshow";
 
 // Floating particles component
@@ -53,13 +53,6 @@ const HeroSection = () => {
               loaded ? "lusion-fade-in" : "opacity-0"
             }`}
           >
-            <div className="inline-flex items-center px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-4">
-              <Sparkles className="w-4 h-4 mr-2 text-primary animate-pulse" />
-              <span className="text-sm font-inter font-medium text-primary">
-                RNSIT Model United Nations
-              </span>
-            </div>
-
             <h1 className="font-inter text-[28px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-foreground tracking-tight">
               <span className="text-gradient-lusion font-black block sm:inline">
                 RNSIT MUN
@@ -103,7 +96,7 @@ const HeroSection = () => {
                   className="inline-flex items-center justify-center"
                 >
                   Learn More
-                  <Globe className="ml-2 h-4 w-4" />
+                  <BookOpen className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
