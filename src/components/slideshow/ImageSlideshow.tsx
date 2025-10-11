@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
 const SLIDESHOW_IMAGES = [
@@ -34,10 +34,7 @@ const SLIDESHOW_IMAGES = [
 
 const ImageSlideshow = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState<boolean[]>(
-    new Array(SLIDESHOW_IMAGES.length).fill(false)
-  );
-  const [preloadedImages, setPreloadedImages] = useState<Set<number>>(new Set([0, 1, 2]));
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
@@ -47,106 +44,97 @@ const ImageSlideshow = () => {
     setCurrentImageIndex((prev) => (prev - 1 + SLIDESHOW_IMAGES.length) % SLIDESHOW_IMAGES.length);
   };
 
-  const handleImageLoad = (index: number) => {
-    setImageLoaded(prev => {
-      const newLoaded = [...prev];
-      newLoaded[index] = true;
-      return newLoaded;
-    });
-  };
-
-  // Preload adjacent images for smooth transitions
+  // Preload ALL images at mount for instant switching
   useEffect(() => {
-    const imagesToPreload = new Set<number>();
-    
-    // Preload current, next 3, and previous 1 images
-    for (let i = -1; i <= 3; i++) {
-      const index = (currentImageIndex + i + SLIDESHOW_IMAGES.length) % SLIDESHOW_IMAGES.length;
-      imagesToPreload.add(index);
-    }
-    
-    setPreloadedImages(imagesToPreload);
-    
-    // Preload images in the background
-    imagesToPreload.forEach(index => {
-      if (!imageLoaded[index]) {
+    let loadedCount = 0;
+    const imagePromises = SLIDESHOW_IMAGES.map((src) => {
+      return new Promise<void>((resolve) => {
         const img = new Image();
-        img.src = SLIDESHOW_IMAGES[index];
-        img.onload = () => handleImageLoad(index);
-      }
+        img.src = src;
+        img.onload = () => {
+          loadedCount++;
+          if (loadedCount === SLIDESHOW_IMAGES.length) {
+            setAllImagesLoaded(true);
+          }
+          resolve();
+        };
+        img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === SLIDESHOW_IMAGES.length) {
+            setAllImagesLoaded(true);
+          }
+          resolve();
+        };
+      });
     });
-  }, [currentImageIndex]);
+
+    Promise.all(imagePromises);
+  }, []);
 
   useEffect(() => {
+    if (!allImagesLoaded) return;
+    
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => 
         (prevIndex + 1) % SLIDESHOW_IMAGES.length
       );
-    }, 4000); // Increased to 4s for better viewing time
+    }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [allImagesLoaded]);
 
   return (
     <div className="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden bg-muted/20">
       {/* Image wrapper with fixed height for consistency */}
       <div className="relative w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[500px] flex items-center justify-center">
-        <AnimatePresence mode="wait">
+        {!allImagesLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/40 z-20">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+
+        {/* Render all images stacked, only show current with crossfade */}
+        {SLIDESHOW_IMAGES.map((src, index) => (
           <motion.div
-            key={currentImageIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="absolute inset-0 flex items-center justify-center"
+            key={index}
+            initial={false}
+            animate={{ 
+              opacity: index === currentImageIndex ? 1 : 0,
+              zIndex: index === currentImageIndex ? 10 : 5
+            }}
+            transition={{ 
+              duration: 0.8,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0"
             style={{ willChange: "opacity" }}
           >
-            {!imageLoaded[currentImageIndex] && (
-              <div className="absolute inset-0 flex items-center justify-center bg-muted/40">
-                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            )}
             <img
-              src={SLIDESHOW_IMAGES[currentImageIndex]}
-              alt={`RNSIT MUN slideshow ${currentImageIndex + 1}`}
+              src={src}
+              alt={`RNSIT MUN slideshow ${index + 1}`}
               className="w-full h-full object-cover rounded-2xl"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
-              onLoad={() => handleImageLoad(currentImageIndex)}
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder.svg';
-                handleImageLoad(currentImageIndex);
+              style={{ 
+                willChange: "opacity",
+                display: allImagesLoaded ? 'block' : 'none'
               }}
-              style={{ willChange: "opacity" }}
             />
           </motion.div>
-        </AnimatePresence>
-
-        {/* Preload adjacent images */}
-        {Array.from(preloadedImages).map((index) => (
-          <img
-            key={`preload-${index}`}
-            src={SLIDESHOW_IMAGES[index]}
-            alt=""
-            className="hidden"
-            loading="eager"
-            onLoad={() => handleImageLoad(index)}
-          />
         ))}
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10" />
 
         {/* Glow border */}
-        <div className="absolute inset-0 border border-primary/30 rounded-2xl animate-lusion-glow pointer-events-none" />
+        <div className="absolute inset-0 border border-primary/30 rounded-2xl animate-lusion-glow pointer-events-none z-10" />
 
         {/* Mobile Navigation */}
         <Button
           onClick={prevImage}
           variant="ghost"
           size="icon"
-          className="absolute left-2 top-1/2 -translate-y-1/2 md:hidden bg-black/30 hover:bg-black/50 text-white w-10 h-10 z-10"
+          className="absolute left-2 top-1/2 -translate-y-1/2 md:hidden bg-black/30 hover:bg-black/50 text-white w-10 h-10 z-20"
           aria-label="Previous image"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -156,7 +144,7 @@ const ImageSlideshow = () => {
           onClick={nextImage}
           variant="ghost"
           size="icon"
-          className="absolute right-2 top-1/2 -translate-y-1/2 md:hidden bg-black/30 hover:bg-black/50 text-white w-10 h-10 z-10"
+          className="absolute right-2 top-1/2 -translate-y-1/2 md:hidden bg-black/30 hover:bg-black/50 text-white w-10 h-10 z-20"
           aria-label="Next image"
         >
           <ChevronRight className="w-5 h-5" />
@@ -164,7 +152,7 @@ const ImageSlideshow = () => {
       </div>
 
       {/* Dots indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-3">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
         {SLIDESHOW_IMAGES.map((_, index) => (
           <button
             key={index}
