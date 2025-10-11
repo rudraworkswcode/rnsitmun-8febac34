@@ -37,6 +37,7 @@ const ImageSlideshow = () => {
   const [imageLoaded, setImageLoaded] = useState<boolean[]>(
     new Array(SLIDESHOW_IMAGES.length).fill(false)
   );
+  const [preloadedImages, setPreloadedImages] = useState<Set<number>>(new Set([0, 1, 2]));
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
@@ -54,12 +55,34 @@ const ImageSlideshow = () => {
     });
   };
 
+  // Preload adjacent images for smooth transitions
+  useEffect(() => {
+    const imagesToPreload = new Set<number>();
+    
+    // Preload current, next 3, and previous 1 images
+    for (let i = -1; i <= 3; i++) {
+      const index = (currentImageIndex + i + SLIDESHOW_IMAGES.length) % SLIDESHOW_IMAGES.length;
+      imagesToPreload.add(index);
+    }
+    
+    setPreloadedImages(imagesToPreload);
+    
+    // Preload images in the background
+    imagesToPreload.forEach(index => {
+      if (!imageLoaded[index]) {
+        const img = new Image();
+        img.src = SLIDESHOW_IMAGES[index];
+        img.onload = () => handleImageLoad(index);
+      }
+    });
+  }, [currentImageIndex]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => 
         (prevIndex + 1) % SLIDESHOW_IMAGES.length
       );
-    }, 3000);
+    }, 4000); // Increased to 4s for better viewing time
 
     return () => clearInterval(interval);
   }, []);
@@ -71,11 +94,12 @@ const ImageSlideshow = () => {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentImageIndex}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             className="absolute inset-0 flex items-center justify-center"
+            style={{ willChange: "opacity" }}
           >
             {!imageLoaded[currentImageIndex] && (
               <div className="absolute inset-0 flex items-center justify-center bg-muted/40">
@@ -86,23 +110,24 @@ const ImageSlideshow = () => {
               src={SLIDESHOW_IMAGES[currentImageIndex]}
               alt={`RNSIT MUN slideshow ${currentImageIndex + 1}`}
               className="w-full h-full object-cover rounded-2xl"
-              loading={currentImageIndex === 0 ? "eager" : "lazy"}
+              loading="eager"
               decoding="async"
-              {...{ fetchpriority: currentImageIndex === 0 ? "high" : "low" }}
+              fetchPriority="high"
               onLoad={() => handleImageLoad(currentImageIndex)}
               onError={(e) => {
                 e.currentTarget.src = '/placeholder.svg';
                 handleImageLoad(currentImageIndex);
               }}
+              style={{ willChange: "opacity" }}
             />
           </motion.div>
         </AnimatePresence>
 
-        {/* Preload next few images */}
-        {SLIDESHOW_IMAGES.slice(0, 3).map((image, index) => (
+        {/* Preload adjacent images */}
+        {Array.from(preloadedImages).map((index) => (
           <img
             key={`preload-${index}`}
-            src={image}
+            src={SLIDESHOW_IMAGES[index]}
             alt=""
             className="hidden"
             loading="eager"
