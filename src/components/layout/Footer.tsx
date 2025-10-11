@@ -56,7 +56,7 @@ const Footer = () => {
                   RNSIT MUNSoc
                 </h3>
                 <p className="text-foreground/70 text-sm font-roboto-mono tracking-wide">
-                  Model United Nations
+                  Model United Nations Society
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/blogs" className="footer-link-lusion text-lg">
+                <Link to="/resources" className="footer-link-lusion text-lg">
                   Resources
                 </Link>
               </li>

@@ -27,7 +27,7 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Events", path: "/events" },
     { name: "Members", path: "/members" },
-    { name: "Blogs", path: "/blogs" },
+    { name: "Resources", path: "/resources" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -56,7 +56,7 @@ const Navbar = () => {
                 RNSIT MUNSoc
               </span>
               <span className="font-inter text-xs text-muted-foreground hidden sm:block tracking-wide max-w-none">
-                Model United Nations
+                Model United Nations Society
               </span>
             </div>
           </Link>
