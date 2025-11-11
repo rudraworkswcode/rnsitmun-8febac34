@@ -41,8 +41,7 @@ const Events = () => {
       image: "/mun-logo.jpg",
       highlight: true,
       icon: Globe,
-    },
-
+    }
   ];
 
   const pastEvents = [
@@ -116,7 +115,7 @@ const Events = () => {
       image: "/atlas-quiz-banner.jpg",
       highlight: false,
       icon: Trophy,
-    },    
+    }   
   ];
 
   const EventCard = ({
