@@ -20,7 +20,7 @@ const Events = () => {
       date: "November 21-22, 2025",
       location: "ECE Block, Hitech Lab",
       description:
-        "The Third edition of our intra-college MUN, continuing the tradition of diplomatic engagement and excellence.",
+        "The third edition of our intra-college MUN, continuing the tradition of diplomatic engagement and excellence.",
       status: "upcoming",
       participants: "60+ Delegates",
       committees: ["IntraMUN"],
@@ -28,6 +28,7 @@ const Events = () => {
       highlight: true,
       icon: Trophy,
     },
+    {
       id: 2,
       title: "RNSMUN 2025",
       subtitle: "The Annual Flagship MUN Conference",
@@ -41,7 +42,7 @@ const Events = () => {
       image: "/mun-logo.jpg",
       highlight: true,
       icon: Globe,
-    }
+    },
   ];
 
   const pastEvents = [
@@ -102,20 +103,20 @@ const Events = () => {
       icon: Trophy,
     },
     {
-      id: 6,
+      id: 7,
       title: "ATLAS Quiz 2.0",
       subtitle: "The Intercollege Quiz",
-      date: "9 October 2025",
+      date: "October 9, 2025",
       location: "RNSIT Campus",
       description:
         "ATLAS Quiz is RNSIT's flagship intercollegiate quiz competition, bringing together some of the sharpest minds to compete across diverse topics including current affairs, history, science, and culture.",
-      status: "Completed",
+      status: "completed",
       participants: "100+ Teams",
       prizePool: "₹6000",
       image: "/atlas-quiz-banner.jpg",
       highlight: false,
       icon: Trophy,
-    }   
+    },
   ];
 
   const EventCard = ({
@@ -201,9 +202,7 @@ const Events = () => {
               {event.description}
             </p>
 
-            {/* Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-              {/* Date */}
               <div className="flex items-center space-x-2 sm:space-x-3 text-foreground bg-primary/5 rounded-lg p-3 transition-colors group-hover:bg-primary/10">
                 <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                 <span className="font-inter font-medium text-sm sm:text-base">
@@ -211,7 +210,6 @@ const Events = () => {
                 </span>
               </div>
 
-              {/* Venue */}
               <div className="flex items-center space-x-2 sm:space-x-3 text-foreground bg-primary/5 rounded-lg p-3 transition-colors group-hover:bg-primary/10">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                 <span className="font-inter font-medium text-sm sm:text-base">
@@ -219,7 +217,6 @@ const Events = () => {
                 </span>
               </div>
 
-              {/* Participants */}
               <div className="flex items-center space-x-2 sm:space-x-3 text-foreground bg-primary/5 rounded-lg p-3 transition-colors group-hover:bg-primary/10">
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                 <span className="font-inter font-medium text-sm sm:text-base">
@@ -227,7 +224,6 @@ const Events = () => {
                 </span>
               </div>
 
-              {/* Committees */}
               {event.committees && (
                 <div className="flex items-center space-x-2 sm:space-x-3 text-foreground bg-primary/5 rounded-lg p-3 transition-colors group-hover:bg-primary/10">
                   <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
@@ -237,7 +233,6 @@ const Events = () => {
                 </div>
               )}
 
-              {/* Prize Pool - shown last */}
               {event.prizePool && (
                 <div className="flex items-center space-x-2 sm:space-x-3 text-foreground bg-primary/5 rounded-lg p-3 transition-colors group-hover:bg-primary/10 md:col-span-2">
                   <Award className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
