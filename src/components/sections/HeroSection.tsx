@@ -109,6 +109,56 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
+=======
+
+        {/* Collaborators Section */}
+        <div
+          className={`mt-16 md:mt-24 w-full bg-gradient-to-br from-primary/5 to-transparent rounded-3xl p-1 overflow-hidden transition-opacity duration-700 ${
+            loaded ? "lusion-fade-in" : "opacity-0"
+          }`}
+          style={{ transitionDelay: "400ms" }}
+        >
+          <div className="bg-muted/20 rounded-2xl p-8 md:p-12">
+            {/* Title Section */}
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="font-inter text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
+                TOGETHER STRONGER
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground font-inter font-medium">
+                We collaborate with
+              </p>
+            </div>
+
+            {/* Collaborators Images Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-6">
+              {[
+                { name: "Collaborator 1", image: "/collaborators/KLE.png" },
+                { name: "Collaborator 2", image: "/collaborators/pedaluru.png" },
+                { name: "Collaborator 3", image: "/collaborators/WCG.jpg" },
+              ].map((collaborator, i) => (
+                <div
+                  key={collaborator.name}
+                  className={
+                    (i === 1 ? "md:col-span-3 mx-auto" : "md:col-span-1 aspect-square md:max-w-[220px] mx-auto") +
+                    " flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl border border-primary/20 hover:border-primary/40 hover:ring-4 hover:ring-primary/30 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  }
+                >
+                  <img
+                    src={collaborator.image}
+                    alt={collaborator.name}
+                    className={
+                      i === 1
+                        ? "w-full h-full object-cover"
+                        : "w-full h-full object-cover"
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+>>>>>>> c6353bc2254a8e63cf00f25da6d5f04e141eb9ef
       </div>
 
       {/* Bottom gradient fade */}
