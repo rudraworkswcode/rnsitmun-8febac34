@@ -1,0 +1,153 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice">
+  <!-- Dark Navy Gradient Background -->
+  <defs>
+    <linearGradient id="navyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0C1A2B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#12243D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0C1A2B;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle overlay pattern -->
+    <pattern id="subtleTexture" patternUnits="userSpaceOnUse" width="40" height="40">
+      <circle cx="20" cy="20" r="0.5" fill="#ffffff" opacity="0.03"/>
+    </pattern>
+  </defs>
+
+  <!-- Main gradient background -->
+  <rect width="1200" height="300" fill="url(#navyGradient)"/>
+  
+  <!-- Subtle texture overlay -->
+  <rect width="1200" height="300" fill="url(#subtleTexture)"/>
+
+  <!-- Flowing Separator Lines -->
+  <g id="separator-lines" opacity="0.4">
+    <path d="M0,80 Q300,60 600,70 Q900,80 1200,65" 
+          stroke="#ffffff" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M0,100 Q400,85 800,95 Q1000,100 1200,90" 
+          stroke="#ffffff" stroke-width="0.8" fill="none" opacity="0.2"/>
+    <path d="M0,220 Q200,210 400,215 Q600,220 800,210 Q1000,200 1200,205" 
+          stroke="#ffffff" stroke-width="0.6" fill="none" opacity="0.15"/>
+  </g>
+
+  <!-- Left Olive Branch Frame -->
+  <g id="left-olive-frame" transform="translate(50,120)" opacity="0.3">
+    <!-- Main curved stem -->
+    <path d="M0,0 Q20,-30 35,-55 Q50,-80 60,-110" 
+          stroke="#ffffff" stroke-width="1.5" fill="none"/>
+    
+    <!-- Delicate leaves - left side -->
+    <ellipse cx="12" cy="-20" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-25 12 -20)"/>
+    <ellipse cx="18" cy="-35" rx="7" ry="3" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-20 18 -35)"/>
+    <ellipse cx="26" cy="-55" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-15 26 -55)"/>
+    <ellipse cx="35" cy="-75" rx="5" ry="2" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-10 35 -75)"/>
+    <ellipse cx="45" cy="-95" rx="4" ry="1.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-5 45 -95)"/>
+    
+    <!-- Delicate leaves - right side -->
+    <ellipse cx="25" cy="-15" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(30 25 -15)"/>
+    <ellipse cx="32" cy="-40" rx="7" ry="3" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(20 32 -40)"/>
+    <ellipse cx="42" cy="-65" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(15 42 -65)"/>
+    <ellipse cx="52" cy="-85" rx="5" ry="2" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(10 52 -85)"/>
+    <ellipse cx="58" cy="-105" rx="3" ry="1.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(5 58 -105)"/>
+  </g>
+
+  <!-- Right Olive Branch Frame -->
+  <g id="right-olive-frame" transform="translate(1150,120) scale(-1,1)" opacity="0.3">
+    <!-- Main curved stem -->
+    <path d="M0,0 Q20,-30 35,-55 Q50,-80 60,-110" 
+          stroke="#ffffff" stroke-width="1.5" fill="none"/>
+    
+    <!-- Delicate leaves - left side -->
+    <ellipse cx="12" cy="-20" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-25 12 -20)"/>
+    <ellipse cx="18" cy="-35" rx="7" ry="3" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-20 18 -35)"/>
+    <ellipse cx="26" cy="-55" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-15 26 -55)"/>
+    <ellipse cx="35" cy="-75" rx="5" ry="2" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-10 35 -75)"/>
+    <ellipse cx="45" cy="-95" rx="4" ry="1.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(-5 45 -95)"/>
+    
+    <!-- Delicate leaves - right side -->
+    <ellipse cx="25" cy="-15" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(30 25 -15)"/>
+    <ellipse cx="32" cy="-40" rx="7" ry="3" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(20 32 -40)"/>
+    <ellipse cx="42" cy="-65" rx="6" ry="2.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(15 42 -65)"/>
+    <ellipse cx="52" cy="-85" rx="5" ry="2" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(10 52 -85)"/>
+    <ellipse cx="58" cy="-105" rx="3" ry="1.5" 
+             stroke="#ffffff" stroke-width="0.8" fill="none" 
+             transform="rotate(5 58 -105)"/>
+  </g>
+
+  <!-- Flowing Decorative Curves -->
+  <g id="decorative-curves" opacity="0.2">
+    <path d="M200,150 Q400,130 600,140 Q800,150 1000,135" 
+          stroke="#ffffff" stroke-width="1.2" fill="none"/>
+    <path d="M150,180 Q350,165 550,175 Q750,185 950,170" 
+          stroke="#ffffff" stroke-width="1" fill="none" opacity="0.8"/>
+    <path d="M250,200 Q450,190 650,195 Q850,200 1050,190" 
+          stroke="#ffffff" stroke-width="0.8" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- Subtle Diplomatic Accents -->
+  <g id="diplomatic-accents" opacity="0.15">
+    <!-- Small connecting dots -->
+    <circle cx="300" cy="140" r="1.5" fill="#ffffff"/>
+    <circle cx="600" cy="130" r="2" fill="#ffffff"/>
+    <circle cx="900" cy="145" r="1.5" fill="#ffffff"/>
+    
+    <!-- Delicate connection lines -->
+    <path d="M300,140 Q450,125 600,130" 
+          stroke="#ffffff" stroke-width="0.5" fill="none" stroke-dasharray="2,4"/>
+    <path d="M600,130 Q750,135 900,145" 
+          stroke="#ffffff" stroke-width="0.5" fill="none" stroke-dasharray="2,4"/>
+  </g>
+
+  <!-- Corner Flourishes -->
+  <g id="corner-flourishes" opacity="0.2">
+    <!-- Bottom left -->
+    <path d="M0,250 Q30,240 60,245 Q90,250 120,240" 
+          stroke="#ffffff" stroke-width="0.8" fill="none"/>
+    <path d="M10,260 Q25,255 40,258" 
+          stroke="#ffffff" stroke-width="0.6" fill="none"/>
+    
+    <!-- Bottom right -->
+    <path d="M1080,240 Q1110,235 1140,240 Q1170,245 1200,235" 
+          stroke="#ffffff" stroke-width="0.8" fill="none"/>
+    <path d="M1160,250 Q1175,248 1190,252" 
+          stroke="#ffffff" stroke-width="0.6" fill="none"/>
+  </g>
+</svg>

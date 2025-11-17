@@ -1,0 +1,441 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Lusion-inspired theme colors */
+    --background: 0 0% 0%; /* Deep Black */
+    --foreground: 0 0% 100%; /* Bright White */
+
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 226 100% 55%; /* Electric Blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 94%; /* Subtle Gray */
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 226 100% 55%; /* Electric Blue */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
+    --ring: 226 100% 55%;
+
+    --radius: 0.75rem;
+
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%), hsl(226 100% 55%));
+    --gradient-secondary: linear-gradient(180deg, hsl(0 0% 0%), hsl(0 0% 8%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(226 100% 55% / 0.1) 100%);
+
+    /* Custom shadows */
+    --shadow-electric: 0 0 30px hsl(226 100% 55% / 0.3);
+    --shadow-glow: 0 0 40px hsl(226 100% 55% / 0.2);
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.8);
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar (keeping existing) */
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 226 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 226 100% 55%;
+  }
+
+  .dark {
+    /* Dark mode uses same colors for consistency */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 226 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 94%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 226 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
+    --ring: 226 100% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: hsl(var(--background));
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  /* Fix for mobile Chrome desktop site spacing */
+  .main-container {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* Replace 100vh with 100dvh for better mobile support */
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+
+@layer components {
+  /* Lusion-specific button styles */
+  .btn-lusion {
+    @apply bg-primary hover:bg-primary/90 text-white font-inter font-semibold 
+    px-6 py-3 rounded-xl transition-all duration-300 
+    hover:shadow-[0_0_20px_rgba(26,47,251,0.4)] 
+    active:scale-95 border-0;
+  }
+
+  .btn-lusion-outline {
+    @apply bg-transparent hover:bg-primary/10 text-primary hover:text-white 
+    font-inter font-semibold px-6 py-3 rounded-xl 
+    border border-primary/30 hover:border-primary 
+    transition-all duration-300 
+    hover:shadow-[0_0_15px_rgba(26,47,251,0.3)] 
+    active:scale-95;
+  }
+
+  /* Text gradient utilities */
+  .text-gradient-lusion {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* Lusion-specific animations */
+  .lusion-particles {
+    animation: lusion-float 6s ease-in-out infinite;
+  }
+
+  .lusion-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+  }
+
+  /* Loading skeleton */
+  .skeleton {
+    @apply animate-pulse bg-muted/20 rounded;
+  }
+
+  /* Safe area handling */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* AI response styling */
+  .ai-response-bubble {
+    @apply animate-fade-in;
+  }
+
+  /* Loading Animation */
+  .lusion-loader {
+    animation: lusion-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .lusion-loader-text {
+    animation: lusion-text-glow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Globe Animation */
+  .globe-spin {
+    animation: globe-spin 24s linear infinite;
+  }
+
+  .globe-float {
+    animation: globe-float 6s ease-in-out infinite;
+  }
+
+  /* Lusion-inspired Animations */
+  .lusion-scale-in {
+    animation: lusion-scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .lusion-slide-up {
+    animation: lusion-slide-up 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  /* Interactive text effects */
+  .story-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+}
+
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+  
+  .animate-reverse-spin-slow {
+    animation: spin 6s linear infinite reverse;
+  }
+  
+  .animate-lusion-orbit {
+    animation: lusion-orbit 20s linear infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 15s ease infinite;
+    background-size: 400% 400%;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .animate-wave {
+    animation: wave 8s ease-in-out infinite;
+  }
+
+  .animate-wave-slow {
+    animation: wave-slow 10s ease-in-out infinite;
+  }
+
+  .animate-wave-slower {
+    animation: wave-slower 12s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-3deg);
+  }
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes gradient-xy {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-25px) translateY(-10px);
+  }
+}
+
+@keyframes wave-slow {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(25px) translateY(-15px);
+  }
+}
+
+@keyframes wave-slower {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-20px) translateY(12px);
+  }
+}
+
+/* Print styles for receipts */
+@media print {
+  @page {
+    margin: 0.5in;
+    size: A4 portrait;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  /* Ensure only the receipt is visible and fills width on mobile */
+  .print-receipt {
+    width: 100% !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    padding: 0.5in !important;
+  }
+  .print-receipt-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+  
+  .print\:border-0 {
+    border: none !important;
+  }
+  
+  .print\:text-xs {
+    font-size: 0.75rem !important;
+  }
+  
+  .print\:text-base {
+    font-size: 1rem !important;
+  }
+  
+  .print\:text-xl {
+    font-size: 1.25rem !important;
+  }
+  
+  .print\:w-4 {
+    width: 1rem !important;
+  }
+  
+  .print\:h-4 {
+    height: 1rem !important;
+  }
+  
+  .print\:w-8 {
+    width: 2rem !important;
+  }
+  
+  .print\:h-8 {
+    height: 2rem !important;
+  }
+  
+  .print\:p-4 {
+    padding: 1rem !important;
+  }
+  
+  .print\:pb-2 {
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .print\:pb-4 {
+    padding-bottom: 1rem !important;
+  }
+  
+  .print\:pt-2 {
+    padding-top: 0.5rem !important;
+  }
+  
+  .print\:mb-1 {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .print\:mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .print\:mb-4 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .print\:space-y-2 > * + * {
+    margin-top: 0.5rem !important;
+  }
+}
