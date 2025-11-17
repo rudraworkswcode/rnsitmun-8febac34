@@ -113,6 +113,46 @@ const Hero = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Collaborators Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="mt-16 md:mt-24 w-full bg-gradient-to-br from-primary/5 to-transparent rounded-3xl p-1 overflow-hidden"
+        >
+          <div className="bg-muted/20 rounded-2xl p-8 md:p-12">
+            {/* Title Section */}
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="font-inter text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
+                TOGETHER STRONGER
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground font-inter font-medium">
+                We collaborate with
+              </p>
+            </div>
+
+            {/* Collaborators Images Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+              {[
+                { name: "Collaborator 1", image: "/collaborators/KLE.png" },
+                { name: "Collaborator 2", image: "/collaborators/pedaluru.png" },
+                { name: "Collaborator 3", image: "/collaborators/WCG.jpg" },
+              ].map((collaborator) => (
+                <div
+                  key={collaborator.name}
+                  className="flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl aspect-square border border-primary/20 hover:border-primary/40 transition-all duration-300 overflow-hidden"
+                >
+                  <img 
+                    src={collaborator.image} 
+                    alt={collaborator.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* Bottom gradient fade */}
