@@ -109,8 +109,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
-=======
 
         {/* Collaborators Section */}
         <div
@@ -158,7 +156,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
->>>>>>> c6353bc2254a8e63cf00f25da6d5f04e141eb9ef
       </div>
 
       {/* Bottom gradient fade */}
