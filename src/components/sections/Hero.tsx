@@ -113,6 +113,8 @@ const Hero = () => {
             </div>
           </motion.div>
         </div>
+<<<<<<< HEAD
+=======
 
         {/* Collaborators Section */}
         <motion.div
@@ -153,6 +155,7 @@ const Hero = () => {
             </div>
           </div>
         </motion.div>
+>>>>>>> c6353bc2254a8e63cf00f25da6d5f04e141eb9ef
       </div>
 
       {/* Bottom gradient fade */}
